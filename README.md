@@ -45,6 +45,10 @@ __url__
 
 上传接口地址，必选。
 
+__headers__ (新增)
+
+json对象，上传请求的头部信息，可选
+
 __params__
 
 hash对象，上传请求附带的参数，可选
@@ -110,5 +114,3 @@ __uploadcomplete__ (e, file, responseText)
 __uploadcancel__ (e, file)
 
 调用uploader.cancel()方法取消上传的时候会触发这个事件
-
-

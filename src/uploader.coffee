@@ -5,6 +5,7 @@ class Uploader extends SimpleModule
 
   opts:
     url: ''
+    headers: null
     params: null
     fileKey: 'upload_file'
     connectionCount: 3
@@ -72,6 +73,7 @@ class Uploader extends SimpleModule
 
     id: @generateId()
     url: @opts.url
+    headers: @opts.headers
     params: @opts.params
     fileKey: @opts.fileKey
     name: name
@@ -85,14 +87,16 @@ class Uploader extends SimpleModule
     formData.append("original_filename", file.name)
     formData.append(k, v) for k, v of file.params if file.params
 
+    headers = 'X-File-Name': encodeURIComponent(file.name)
+    $.extend headers, file.headers
+
     file.xhr = $.ajax
       url: file.url
       data: formData
       processData: false
       contentType: false
       type: 'POST'
-      headers:
-        'X-File-Name': encodeURIComponent(file.name)
+      headers: headers
       xhr: ->
         req = $.ajaxSettings.xhr()
         if req
@@ -156,5 +160,3 @@ class Uploader extends SimpleModule
 
 uploader = (opts) ->
   new Uploader(opts)
-
-
